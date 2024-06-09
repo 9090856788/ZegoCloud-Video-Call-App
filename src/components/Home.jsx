@@ -1,50 +1,27 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
-import {
-  Box,
-  TextField,
-  Button,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import React from "react";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Banner from "../img/banner.jpg";
-import { useDispatch, useSelector } from "react-redux";
-import provideUserDetails from "../redux/dispatchActionProvider";
 
 const Home = () => {
-  const dispatch = useDispatch();
   const navigateTo = useNavigate();
-
-  const userDetailsState = useSelector(
-    (RootState) => RootState.userDetailsState
-  );
-
-  //   state
-  const { userName, randomId } = userDetailsState;
-
-  //   actions
-  const { setUserName, setRandomId } = provideUserDetails();
 
   const generateRandomId = () => {
     const characters = "abcdefghijklmnopqrstuvwxyz";
-    let randomId = userDetailsState.randomId;
-    for (let i = 0; i < characters.length; i++) {
+    let randomId = "";
+    for (let i = 0; i < 10; i++) {
       const randomIndex = Math.floor(Math.random() * characters.length);
       randomId += characters.charAt(randomIndex);
-      dispatch(setRandomId(randomId));
     }
     return randomId;
   };
 
   const handleMeetingId = () => {
-    dispatch(setUserName(userName));
     let id = generateRandomId();
+    console.log("Id is : ", id);
     navigateTo(`/room/${id}/`);
   };
-
-  console.log("userName is: ", userName);
 
   return (
     <>
@@ -82,22 +59,6 @@ const Home = () => {
                   Want to connect you Loved one?
                 </Typography>
 
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  id="name"
-                  label="Name"
-                  name="name"
-                  autoComplete="name"
-                  autoFocus
-                  value={userName}
-                  onChange={(e) => {
-                    setUserName(e.target.value);
-                  }}
-                />
-
                 <Button
                   type="submit"
                   variant="contained"
@@ -105,7 +66,7 @@ const Home = () => {
                   size="large"
                   onClick={handleMeetingId}
                 >
-                  Submit
+                  Go to meeting Room
                 </Button>
               </Box>
             </Container>

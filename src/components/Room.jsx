@@ -2,14 +2,8 @@
 import React from "react";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 const Room = () => {
-  const userDetailsState = useSelector(
-    (RootState) => RootState.userDetailsState
-  );
-  const { userName } = userDetailsState;
-
   const { id } = useParams();
   let myMeeting = async (element) => {
     // generate Kit Token
@@ -21,7 +15,7 @@ const Room = () => {
       serverSecret,
       id,
       Date.now().toString(),
-      userName
+      "Your Name"
     );
 
     // Create instance object from Kit Token.
